@@ -52,7 +52,7 @@
           "foreground": "p:defaultForeground",
           "background": "p:info",
           "properties": {
-            "windows": "\udb81\uddb3"
+            "windows": "\uf17a"
           },
           "template": "{{ if .WSL }}WSL {{ end }}{{.Icon}} "
         },
