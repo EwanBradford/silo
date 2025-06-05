@@ -1,0 +1,139 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "palette": {
+    "defaultForeground": "#686868",
+    "path": "#B0DB9C",
+    "git": "#FAA4BD",
+    "gitAlt": "#ffdc69",
+    "warning": "#FF9B45",
+    "success": "#55ff7a",
+    "info": "#ced6d6"
+  },
+  "blocks": [
+    {
+      "type": "rprompt",
+      "segments": [
+        {
+          "foreground": "p:defaultForeground",
+          "style": "plain",
+          "template": "\uf520 {{ .FormattedMs  }} ",
+          "type": "executiontime"
+        },
+        {
+          "foreground": "p:defaultForeground",
+          "background": "p:warning",
+          "leading_diamond": "\ue0b6",
+          "properties": {},
+          "style": "diamond",
+          "template": "\ue654 {{ .Code }} ",
+          "type": "status"
+        },
+        {
+          "foreground": "p:defaultForeground",
+          "background": "p:info",
+          "leading_diamond": "\ue0b6",
+          "trailing_diamond": "\ue0b4",
+          "properties": {
+            "time_format": "15:04:05"
+          },
+          "style": "diamond",
+          "template": "{{ .CurrentDate | date .Format }}",
+          "type": "time"
+        }
+      ]
+    },
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "os",
+          "style": "diamond",
+          "leading_diamond": "\ue0b6",
+          "foreground": "p:defaultForeground",
+          "background": "p:info",
+          "properties": {
+            "windows": "\udb81\uddb3"
+          },
+          "template": "{{ if .WSL }}WSL {{ end }}{{.Icon}} "
+        },
+        {
+          "foreground": "p:defaultForeground",
+          "background": "p:path",
+          "type": "path",
+          "style": "diamond",
+          "leading_diamond": "\ue0b6",
+          "powerline_symbol": "\ue0b0",
+          // Only show path if not in a git repo
+          "template": "{{ if .Segments.Git.RepoName }}{{ else }} {{ .Path }} {{ end }}",
+          "properties": {
+            "style": "agnoster_short",
+            "max_depth": 3
+          }
+        },
+        {
+          "foreground": "p:defaultForeground",
+          "background": "p:path",
+          "powerline_symbol": "\ue0b0",
+          "style": "powerline",
+          "template": "{{ if .Segments.Git.RepoName }}{{ else }}\u0000{{ end }}",
+          "type": "text"
+        },
+        {
+          "foreground": "p:defaultForeground",
+          "type": "git",
+          "style": "diamond",
+          "leading_diamond": "\ue0b6",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "branch_icon": "\ue725 ",
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          // Only show path if not in a git repo
+          "template": "{{ if .RepoName }}{{ .UpstreamIcon }} <i><b>{{ .RepoName}}</b></i> {{ else }}{{ end }}",
+          "background": "p:gitAlt"
+        },
+        {
+          "foreground": "p:defaultForeground",
+          "background": "p:path",
+          "powerline_symbol": "\ue0b0",
+          "style": "powerline",
+          "template": " {{ if eq .Folder .Segments.Git.RepoName }}{{ else }}{{ if .Segments.Git.RepoName }}{{ .Path }}{{ end }}{{ end }}",
+          "properties": {
+            "style": "agnoster_short",
+            "home_icon": "",
+            "max_depth": 2,
+            "folder_separator_icon": "/",
+            "folder_icon": "\uf07b ",
+            "hide_root_location": true
+          },
+          "type": "path"
+        },
+        {
+          "foreground": "p:defaultForeground",
+          "background": "p:git",
+          "background_templates": [
+            "{{ if or (.Merge) (.Detached) }}#ff6e55{{ end }}"
+          ],
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "branch_icon": "\ue725 ",
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "style": "powerline",
+          "template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#ef5350> \uf046 {{ .Staging.String }}</>{{ end }} {{ if .Merge }}\ueafe {{ end }}{{ if .Detached }}\ue729 {{ end }}",
+          "type": "git"
+        },
+        {
+          // prompt spacer
+          "template": " \b ",
+          "style": "plain",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "version": 3
+}
